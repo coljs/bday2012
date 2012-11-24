@@ -30,6 +30,11 @@
       var html = Player.renderSongs( songs );
       $( '#play-list' ).html( html );
 
+      var oAudio = $( '#myaudio' );
+      console.log( oAudio );
+      oAudio.src = 'https://github.com/BogotaJS/bday2012/blob/master/songs/' + songs[0].name + '?raw=true" data-id=';
+      oAudio.play();
+
       $( 'button' ).on( 'click', Player.onSongClick );
       //Start Playing
       socket.emit( 'start playing', { song_id: 1 } );
@@ -46,6 +51,7 @@
 </script>
 
 <div id="player">
+  <audio id="myaudio" controls="controls">HTML5 audio not supported</audio>
   <div id="loader">Loading...</div>
   <div id="play-list">
 
