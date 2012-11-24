@@ -30,25 +30,28 @@ var onError = function(e) {
 
 var processData = function(data){
   var r,g,b,a,pixel=null;
-  for(var i=0;i<data.length;i+=4){
-    pixel=i;
+  pixel=0;
+  var element = null;
+  for(var i=0;i<data.length;i+=16){
     r=data[i];
     g=data[i+1];
     b=data[i+2];
     a=data[i+3];
-    // var element = document.getElementById('elem'+i);
-    // element.style.width='1px';
-    // element.style.height='1px';
-    console.log('rgb('+r+', '+g+', '+b+')');
-    console.log(colorToHex('rgb('+r+', '+g+', '+b+')'));
+    element = document.getElementById('elem'+pixel);
+    element.style.width='1px';
+    element.style.height='1px';
+    element.style.background='#'+r.toString(16)+g.toString(16)+b.toString(16);
+    element.style.float='inline-block';
+    pixel++;
   }
+    console.log(element);
 };
 
 var thread = function(){
-  ctx.drawImage(video, 0, 0, 300, 300);
-  var imageData = ctx.getImageData(0,0, 300, 300).data;
+  ctx.drawImage(video, 0, 0, 360, 240);
+  var imageData = ctx.getImageData(0,0, 360, 240).data;
   processData(imageData);
-  setTimeout(this.thread, 1000);
+  setTimeout(this.thread, 2000);
 };
 
 
@@ -60,6 +63,7 @@ for(var i=0;i<9000;i++){
     container.appendChild(element);
 }
 container.style.width='300px';
+container.style.height='300px';
 document.body.appendChild(container);
 
 thread();
