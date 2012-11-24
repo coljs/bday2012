@@ -1,0 +1,25 @@
+{
+  "name": "musicpress",
+  "version": "0.0.1",
+  "description": "A simple play list app with node + sockec.io + express",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:senorpasajero/musicpress.git"
+  },
+  "keywords": [
+    "Music",
+    "PlayList",
+    "Real",
+    "Time"
+  ],
+  "author": "@senorpasajero & @edgarflorez",
+  "license": "BSD",
+  "dependencies": {
+    "express": "~3.0.3",
+    "socket.io": "~0.9.11"
+  }
+}
