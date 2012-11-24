@@ -1,0 +1,59 @@
+<script src="/components/underscore/underscore.js"></script>
+<script src="/components/jquery/jquery.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var songs;
+  var Player = Player || {};
+  Player.renderSongs = function( songs ){
+
+    var html = '<ul>';
+    _.each( songs, function( s, key ){
+      html += '<li data-url="https://github.com/BogotaJS/bday2012/blob/master/songs/' + s.name + '?raw=true" data-id="' + s.id + '" >'+ s.name + ' <button type="button" style="color: #036; font-weight: bold;">vote for this song</button></li>';  
+    })
+
+    html += '</ul>';
+    return html;
+  };
+  Player.onSongClick = function( event ){
+    console.log( 'Vote and reorder...' );
+    var song_id = $( event.currentTarget ).parent().data( 'id' );
+    socket.emit( 'vote', { song_id: song_id} );  
+  }
+
+
+  var socket = io.connect('http://10.11.13.196');
+  socket.on('ready', function (data) {
+    console.log(data);
+    songs = data.songs;
+    
+    $(function(){
+      var html = Player.renderSongs( songs );
+      $( '#play-list' ).html( html );
+
+      var oAudio = $( '#myaudio' );
+      console.log( oAudio );
+      oAudio.src = 'https://github.com/BogotaJS/bday2012/blob/master/songs/' + songs[0].name + '?raw=true" data-id=';
+      oAudio.play();
+
+      $( 'button' ).on( 'click', Player.onSongClick );
+      //Start Playing
+      socket.emit( 'start playing', { song_id: 1 } );
+    })
+
+    socket.on( 'order songs', function( data ){
+      //console.log( 'Order songs', data );
+      var html = Player.renderSongs( data.songs )
+      $( '#play-list' ).html( html );
+      $( 'button' ).on( 'click', Player.onSongClick );
+    } )
+    //socket.emit('my other event', { my: 'data' });
+  });
+</script>
+
+<div id="player">
+  <audio id="myaudio" controls="controls">HTML5 audio not supported</audio>
+  <div id="loader">Loading...</div>
+  <div id="play-list">
+
+  </div>
+</div>
