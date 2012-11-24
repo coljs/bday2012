@@ -3,8 +3,8 @@ document.getElementsByTagName("body")[0].innerHTML += '<canvas id=sprite ></canv
 
 var items = document.getElementsByTagName("*");
 var c = document.getElementById("sprite");
-c.width = 3000;
-c.height = 100000;
+c.width = 4000;
+c.height = 10000;
 c.style.border = '1px solid black';
 
 var y  = 0;
@@ -29,9 +29,7 @@ function draw(source) {
 		console.log(y);
 		ctx.drawImage(img, 0, y, img.width, img.height);
 		y = img.height + y;
-		old = ctx.getImageData(0,0,x,y);
-		//c.height = y;
-		//ctx.getImageData(old,0,0);
+		
 	};
 	img.src = source;
 }
