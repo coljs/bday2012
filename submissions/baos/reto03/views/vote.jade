@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  #wrapper
+    h1 Play list
+    p.votes votes
+    ul#list
+      each item, i in songs
+        li(id='#{item[0]}', data-item='#{item[2]}').vote 
+          i
+          p #{item[1]} 
+            span
